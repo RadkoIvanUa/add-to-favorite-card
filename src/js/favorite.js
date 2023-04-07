@@ -1,17 +1,16 @@
-import { instruments } from './js/instruments-for-markup';
-import { createMarkup } from './js/helpers/create-markup';
-import { createModal } from './js/helpers/create-modal';
-import { common } from './js/helpers/common';
+import { createModal } from './helpers/create-modal';
+import { createFavoriteMarkup } from './helpers/create-markup';
+import { common } from './helpers/common';
+import { createMarkup } from './helpers/create-markup';
+import { instruments } from './instruments-for-markup';
 
-const refs = {
-  list: document.querySelector('.js-list'),
-};
+const favoriteList = document.querySelector('.js-favorite-list');
 
 let favoriteArr = JSON.parse(localStorage.getItem(common.FAVORITE_KEY)) ?? [];
 
-refs.list.innerHTML = createMarkup(instruments);
+favoriteList.innerHTML = createFavoriteMarkup(favoriteArr);
 
-refs.list.addEventListener('click', onClick);
+favoriteList.addEventListener('click', onClick);
 
 function onClick(evt) {
   evt.preventDefault();
@@ -22,15 +21,7 @@ function onClick(evt) {
   if (evt.target.nodeName === 'A') {
     createModal(product);
   }
-
   const inFavorite = favoriteArr.some(({ id }) => id === productId);
-
-  if (evt.target.classList.contains('js-favorite')) {
-    if (!inFavorite) {
-      favoriteArr.push(product);
-    }
-    localStorage.setItem(common.FAVORITE_KEY, JSON.stringify(favoriteArr));
-  }
 
   if (evt.target.classList.contains('js-remove')) {
     if (inFavorite) {
@@ -41,6 +32,6 @@ function onClick(evt) {
       });
     }
   }
-
   localStorage.setItem(common.FAVORITE_KEY, JSON.stringify(favoriteArr));
+  favoriteList.innerHTML = createFavoriteMarkup(favoriteArr);
 }
