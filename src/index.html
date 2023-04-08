@@ -7,16 +7,16 @@
     <link rel="stylesheet" href="./sass/index.scss" />
   </head>
   <body>
-    <header>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="./partials/favorite.html">Favorite</a></li>
-      </ul>
-    </header>
-
-    <ul class="js-list"></ul>
-
-    <include src="./partials/favorite.html"></include>
+    <div class="container">
+      <header>
+        <ul class="site-navigation">
+          <li><a href="#">Головна</a></li>
+          <li><a href="./partials/favorite.html">Обране</a></li>
+        </ul>
+      </header>
+      <input type="text" class="js-input filter-input" placeholder="Пошук..." />
+      <ul class="js-list instruments-card"></ul>
+    </div>
     <script type="module" src="./index.js"></script>
   </body>
 </html>

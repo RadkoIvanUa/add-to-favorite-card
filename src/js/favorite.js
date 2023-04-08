@@ -3,6 +3,7 @@ import { createFavoriteMarkup } from './helpers/create-markup';
 import { common } from './helpers/common';
 import { createMarkup } from './helpers/create-markup';
 import { instruments } from './instruments-for-markup';
+import { removeFromFavorite } from './helpers/remove-from-favorite';
 
 const favoriteList = document.querySelector('.js-favorite-list');
 
@@ -23,15 +24,6 @@ function onClick(evt) {
   }
   const inFavorite = favoriteArr.some(({ id }) => id === productId);
 
-  if (evt.target.classList.contains('js-remove')) {
-    if (inFavorite) {
-      favoriteArr.forEach((el, idx) => {
-        if (el.id === productId) {
-          favoriteArr.splice(idx, 1);
-        }
-      });
-    }
-  }
-  localStorage.setItem(common.FAVORITE_KEY, JSON.stringify(favoriteArr));
+  removeFromFavorite(evt.target, inFavorite, favoriteArr, productId);
   favoriteList.innerHTML = createFavoriteMarkup(favoriteArr);
 }
